@@ -5,8 +5,30 @@ public class ProductDetailsPojo {
 	private String unitPrice;   
 	private String quantity; 
 	private String size; 
-	private String colour; 
+	private String colour;
+	private String productName;
+	private String productPrice; 
 		
+	public String getProductPrice() {
+		return productPrice;
+	}
+	public void setProductPrice(String unitPrice) {
+		int intQuantity = Integer.parseInt(quantity);
+		System.out.println(intQuantity);
+		String actualUnitprice = unitPrice.substring(1);
+		System.out.println(actualUnitprice);
+		double intUnitPrice = Double.parseDouble(actualUnitprice);
+		System.out.println(intQuantity);
+		double intproductPrice = intQuantity * intUnitPrice;
+		productPrice = ""+String.format("%.2f", intproductPrice);
+		
+	}
+	public String getProductName() {
+		return productName;
+	}
+	public void setProductName(String productName) {
+		this.productName = productName;
+	}
 	public String getUnitPrice() {
 		return unitPrice;
 	}

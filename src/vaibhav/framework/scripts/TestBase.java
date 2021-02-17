@@ -12,9 +12,9 @@ public class TestBase {
 		System.out.println("STEP - Open Browser");
 		PredefinedActions.start();
 	}
-	@AfterMethod()
+	/*@AfterMethod()
 	public void tearDown(){
 		System.out.println("STEP- Close Browser");
 		PredefinedActions.close();		
-	}
+	}*/
 }
