@@ -20,6 +20,7 @@ import vaibhav.framework.pages.MyProfilePage;
 import vaibhav.framework.pojo.CreateAccountDetailsPojo;
 
 public class SignInTest  extends TestBase{
+	CreateAccountDetailsPojo createAccountDetailsPojo;
 	
 	@Test
 	public void signInValidation() {
@@ -27,7 +28,7 @@ public class SignInTest  extends TestBase{
 		AuthenticationPage authenticationPage=homePage.clickOnSignIn();		
 		authenticationPage.enterEmailAddress("Vaibhav23723@gmail.com");
 		CreateAccountPage createAccountPage=authenticationPage.createAnAccount();
-		CreateAccountDetailsPojo createAccountDetailsPojo = new CreateAccountDetailsPojo();
+		createAccountDetailsPojo = new CreateAccountDetailsPojo();
 		createAccountDetailsPojo.setMale(true);
 		createAccountDetailsPojo.setfirstName("Vaibhav");
 		createAccountDetailsPojo.setLastName("Jagtap");

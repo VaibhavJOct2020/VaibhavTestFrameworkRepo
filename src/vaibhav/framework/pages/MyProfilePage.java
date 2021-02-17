@@ -16,5 +16,22 @@ public class MyProfilePage extends PredefinedActions{
 		return actual;
 		
 	}
+	public ProductCategoryPage selectSection(String choice) {
+		WebDriverWait wait = new WebDriverWait(driver, 30);
+		switch(choice.toUpperCase()) {
+		case "WOMEN":
+			wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[contains(text(),'Categories')]//following-sibling::ul//*[contains(text(),'Women')]"))).click();	
+			break;
+		case "DRESSES":
+			wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[contains(text(),'Categories')]//following-sibling::ul//*[contains(text(),'Dresses')]"))).click();
+			break;
+		case "T-SHIRTS":
+			wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[contains(text(),'Categories')]//following-sibling::ul//*[contains(text(),'T-shirts')]"))).click();
+			break;
+		default:
+			break;
+		}
+		return new ProductCategoryPage();		
+	}
 
 }
