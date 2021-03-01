@@ -14,7 +14,7 @@ public class LoginAccountTest extends TestBase {
 	@Test(enabled=false)
 	public void verifyValidloginTest() {
 		System.out.println("STEP-Login");
-		HomePage homePage = new HomePage();
+		HomePage homePage = HomePage.getInstance();
 		AuthenticationPage authenticationPage =homePage.clickOnSignIn();
 		System.out.println("STEP-Enter Username and passowrd");
 		MyProfilePage myProfilePage = authenticationPage.doLogin("vaibhav23723@gmail.com", "DusKaDum");	
@@ -23,10 +23,10 @@ public class LoginAccountTest extends TestBase {
 		System.out.println("STEP-Validating User");
 		Assert.assertEquals(expected, actual);
 	}
-	@Test
+	@Test(enabled=false)
 	public void verifyInvalidEmailloginTest() {
 		System.out.println("STEP-Login");
-		HomePage homePage = new HomePage();
+		HomePage homePage = HomePage.getInstance();
 		AuthenticationPage authenticationPage =homePage.clickOnSignIn();
 		System.out.println("STEP-Enter Username");
 		authenticationPage.enterEmail("abc@gmail.com");
@@ -39,10 +39,10 @@ public class LoginAccountTest extends TestBase {
 		List<String> actualErrorMessage=authenticationPage.getErrorMEssageOnAuthenticationPage();
 		Assert.assertEquals(expectedErrorMessage, actualErrorMessage);
 	}
-	@Test
+	@Test(enabled=false)
 	public void verifyInvalidPasswordloginTest() {
 		System.out.println("STEP-Login");
-		HomePage homePage = new HomePage();
+		HomePage homePage = HomePage.getInstance();
 		AuthenticationPage authenticationPage =homePage.clickOnSignIn();
 		System.out.println("STEP-Enter Username");
 		authenticationPage.enterEmail("vaibhav23723@gmail.com");
@@ -58,7 +58,7 @@ public class LoginAccountTest extends TestBase {
 	@Test
 	public void verifyBlankfieldsloginTest() {
 		System.out.println("STEP-Login");
-		HomePage homePage = new HomePage();
+		HomePage homePage = HomePage.getInstance();
 		AuthenticationPage authenticationPage =homePage.clickOnSignIn();
 		System.out.println("STEP-Click Submit");
 		authenticationPage.clickSubmit();

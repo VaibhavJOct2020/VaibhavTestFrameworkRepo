@@ -7,22 +7,47 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 
 import vaibhav.framework.base.PredefinedActions;
+import vaibhav.framework.constantPath.ConfigFilePath;
+import vaibhav.framework.utils.PropertyFileReader;
 
 public class AddressPage extends PredefinedActions {
 	
+	private PropertyFileReader propertyFileReader ; 
+	private static AddressPage addressPage;
+	
+	private AddressPage() {
+		propertyFileReader = new PropertyFileReader(ConfigFilePath.ADDRESS_PAGE_PROPERTIES);
+	}
+	
+	public static AddressPage getInstance() {
+		if(addressPage==null) {
+			addressPage=new AddressPage();			
+		}		
+		return addressPage;		
+	}
+	
 	public ShippingPage proceedToCheckoutonAddressPage() {
-		WebElement checkoutElement = driver.findElement(By.cssSelector(".cart_navigation.clearfix .button.btn.btn-default.button-medium>span"));
+		//WebElement checkoutElement = driver.findElement(By.cssSelector(propertyFileReader.getValue("checkout")));
+		WebElement checkoutElement=getElement(propertyFileReader.getValue("checkout"), true);
 		JavascriptExecutor je = (JavascriptExecutor)driver;
 		je.executeScript("arguments[0].click();", checkoutElement);
-		return new ShippingPage();		
+		return ShippingPage.getInstance();		
 	}
 	
 	public ArrayList<String> verifyDeliveryAddress() {
 		ArrayList<String>deliveryAddressList = new ArrayList<String>();
-		String company = driver.findElement(By.cssSelector("#address_delivery>li:nth-child(3)")).getText();
-		String address = driver.findElement(By.cssSelector("#address_delivery>li:nth-child(4)")).getText();
-		String phone = driver.findElement(By.cssSelector("#address_delivery>li:nth-child(7)")).getText();
-		String mobile = driver.findElement(By.cssSelector("#address_delivery>li:nth-child(8)")).getText();
+	/*	String company = driver.findElement(By.cssSelector(propertyFileReader.getValue("company"))).getText();
+		String address = driver.findElement(By.cssSelector(propertyFileReader.getValue("address"))).getText();
+		String phone = driver.findElement(By.cssSelector(propertyFileReader.getValue("phone"))).getText();
+		String mobile = driver.findElement(By.cssSelector(propertyFileReader.getValue("mobile"))).getText();*/
+	/*	String company = getElement(propertyFileReader.getValue("company"), true).getText();
+		String address = getElement(propertyFileReader.getValue("address"), true).getText();
+		String phone = getElement(propertyFileReader.getValue("phone"), false).getText();
+		String mobile = getElement(propertyFileReader.getValue("mobile"),false).getText();*/
+		String company = getElementText(propertyFileReader.getValue("company"), true);
+		String address = getElementText(propertyFileReader.getValue("address"), true);
+		String phone = getElementText(propertyFileReader.getValue("phone"), false);
+		String mobile = getElementText(propertyFileReader.getValue("mobile"),false);
 		deliveryAddressList.add(company);
 		deliveryAddressList.add(address);
 		deliveryAddressList.add(phone);
@@ -32,10 +57,14 @@ public class AddressPage extends PredefinedActions {
 	
 	public ArrayList<String> verifyBillingAddress() {
 		ArrayList<String>billingAddressList = new ArrayList<String>();
-		String company = driver.findElement(By.cssSelector("#address_invoice>li:nth-child(3)")).getText();
-		String address = driver.findElement(By.cssSelector("#address_invoice>li:nth-child(4)")).getText();
-		String phone = driver.findElement(By.cssSelector("#address_invoice>li:nth-child(7)")).getText();
-		String mobile = driver.findElement(By.cssSelector("#address_invoice>li:nth-child(8)")).getText();
+		/*String company = driver.findElement(By.cssSelector(propertyFileReader.getValue("Company"))).getText();
+		String address = driver.findElement(By.cssSelector(propertyFileReader.getValue("Address"))).getText();
+		String phone = driver.findElement(By.cssSelector(propertyFileReader.getValue("Phone"))).getText();
+		String mobile = driver.findElement(By.cssSelector(propertyFileReader.getValue("Mobile"))).getText();*/
+		String company = getElementText(propertyFileReader.getValue("Company"),true);
+		String address = getElementText(propertyFileReader.getValue("Address"),true);
+		String phone = getElementText(propertyFileReader.getValue("Phone"), false);
+		String mobile = getElementText(propertyFileReader.getValue("Mobile"),false);
 		billingAddressList.add(company);
 		billingAddressList.add(address);
 		billingAddressList.add(phone);

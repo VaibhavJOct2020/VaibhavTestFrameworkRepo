@@ -8,15 +8,30 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import vaibhav.framework.base.PredefinedActions;
+import vaibhav.framework.constantPath.ConfigFilePath;
 import vaibhav.framework.exceptionhandling.ProductNotFoundException;
+import vaibhav.framework.utils.PropertyFileReader;
 
 public class ProductCategoryPage extends PredefinedActions {
 	List<WebElement>productList;
+	private PropertyFileReader propertyFileReader;
+	private static ProductCategoryPage productCategoryPage;
+	
+	private ProductCategoryPage(){
+		propertyFileReader = new PropertyFileReader(ConfigFilePath.PRODUCTCATEGORY_PAGE_PROPERTIES);		
+	}
+	
+	public static ProductCategoryPage getInstance() {
+		if(productCategoryPage==null) {
+			productCategoryPage= new ProductCategoryPage();
+		}
+		return productCategoryPage;		
+	}
 	
 	public List<WebElement> getProductList() {
 		WebDriverWait wait = new WebDriverWait(driver,30);
 		wait.until(ExpectedConditions.titleContains("My Store"));
-		productList = driver.findElements(By.cssSelector(".product_list.grid.row li img"));
+		productList = driver.findElements(By.cssSelector(propertyFileReader.getValue("productlist")));
 		return productList;		
 	}
 	
@@ -26,7 +41,7 @@ public class ProductCategoryPage extends PredefinedActions {
 			number -= 1;
 			WebElement productElement = productList.get(number);
 			((JavascriptExecutor) driver).executeScript("arguments[0].click();", productElement);
-			return new ProductDetailsPage();
+			return ProductDetailsPage.getInstance();
 		}
 		else
 			throw new ProductNotFoundException("Product you Are looking for is not available");		

@@ -9,19 +9,48 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import vaibhav.framework.base.PredefinedActions;
+import vaibhav.framework.constantPath.ConfigFilePath;
+import vaibhav.framework.utils.PropertyFileReader;
 
 public class ShoppingSummaryPage extends PredefinedActions {
+	
+	private PropertyFileReader propertyFileReader;
+	private static ShoppingSummaryPage shoppingSummaryPage;
+	
+	private ShoppingSummaryPage(){
+		propertyFileReader = new PropertyFileReader(ConfigFilePath.SHOPPINGSUMMARY_PAGE_PROPERTIES);		
+	}
+	
+	public static ShoppingSummaryPage getInstance() {
+		if(shoppingSummaryPage==null) {
+			shoppingSummaryPage = new ShoppingSummaryPage();
+		}
+		return shoppingSummaryPage;
+	}
 	
 	public ArrayList<String> getProductDetailsOnSummaryPage() {
 		ArrayList<String>actualProductDetails = new ArrayList <String>();
 		WebDriverWait wait = new WebDriverWait(driver,30);
-		String productName =wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".cart_description .product-name>a"))).getText();
-		String unitPrice =wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".cart_unit>.price>span"))).getText();
+		//String productName =wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(propertyFileReader.getValue("productName")))).getText();
+		WebElement productNameElement = getElement(propertyFileReader.getValue("productName"), true);
+		String productName =getElementText(productNameElement);
+		//String unitPrice =wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(propertyFileReader.getValue("unitPrice")))).getText();
+		WebElement unitPriceElement = getElement(propertyFileReader.getValue("unitPrice"), true);
+		String unitPrice =getElementText(unitPriceElement);
+		// productNameElement.getText();
 		String actaulUnitPrice = unitPrice.substring(1);
-		String quantity = driver.findElement(By.cssSelector(".cart_quantity.text-center>input:nth-child(1)")).getAttribute("Value");
-		String total = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".cart_total>.price"))).getText();
+		//String quantity = driver.findElement(By.cssSelector(propertyFileReader.getValue("quantity"))).getAttribute("Value");
+		WebElement quantityElement = getElement(propertyFileReader.getValue("quantity"), true);
+		String quantity = quantityElement.getAttribute("Value");
+		//String total = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(propertyFileReader.getValue("total")))).getText();
+		/*WebElement totalElement = getElement(propertyFileReader.getValue("total"), true);
+		String total = totalElement.getText();*/
+		String total = getElementText(propertyFileReader.getValue("total"), true);
 		String actualTotal = total.substring(1);		
-		String colourandsize = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".cart_description small>a"))).getText();
+		//String colourandsize = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(propertyFileReader.getValue("colourandsize")))).getText();
+		/*WebElement colourandsizeElement = getElement(propertyFileReader.getValue("colourandsize"), true);
+		String colourandsize = colourandsizeElement.getText();*/
+		String colourandsize = getElementText(propertyFileReader.getValue("colourandsize"), true);
 		String[] colourandsizeArray= colourandsize.split(":");
 		/*for(int i =0 ; i<colourandsizeArray.length; i++) {
 			System.out.println(colourandsizeArray[i]);
@@ -38,10 +67,12 @@ public class ShoppingSummaryPage extends PredefinedActions {
 	}
 	
 	public AddressPage proceedToCheckout() {
-		WebElement checkoutElement = driver.findElement(By.cssSelector(".cart_navigation.clearfix>a>span"));
+		//WebElement checkoutElement = driver.findElement(By.cssSelector(propertyFileReader.getValue("checkout")));
+		/*WebElement checkoutElement = getElement(propertyFileReader.getValue("checkout"), true);
 		JavascriptExecutor je = (JavascriptExecutor)driver;
-		je.executeScript("arguments[0].click();", checkoutElement);
-		return new AddressPage();		
+		je.executeScript("arguments[0].click();", checkoutElement);*/
+		clickOnElement(propertyFileReader.getValue("checkout"), true);
+		return AddressPage.getInstance();		
 	}
 
 }

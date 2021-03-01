@@ -20,7 +20,7 @@ public class E2EProductPurchaseTest extends TestBase {
 	@Test
 	public void productPurchase() {
 		System.out.println("STEP-Login");
-		HomePage homePage = new HomePage();
+		HomePage homePage = HomePage.getInstance();
 		System.out.println("STEP-Signing in");
 		AuthenticationPage authenticationPage =homePage.clickOnSignIn();
 		System.out.println("STEP-Providing username and passowrd");

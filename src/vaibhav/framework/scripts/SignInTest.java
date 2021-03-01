@@ -24,9 +24,9 @@ public class SignInTest  extends TestBase{
 	
 	@Test
 	public void signInValidation() {
-		HomePage homePage = new HomePage();
+		HomePage homePage =HomePage.getInstance();
 		AuthenticationPage authenticationPage=homePage.clickOnSignIn();		
-		authenticationPage.enterEmailAddress("Vaibhav23723@gmail.com");
+		authenticationPage.enterEmailAddress("Vaibhav231223@gmail.com");
 		CreateAccountPage createAccountPage=authenticationPage.createAnAccount();
 		createAccountDetailsPojo = new CreateAccountDetailsPojo();
 		createAccountDetailsPojo.setMale(true);
@@ -51,10 +51,9 @@ public class SignInTest  extends TestBase{
 		Assert.assertEquals(actual,expected,"first name and last name did not matched");
 	}
 	
-	@Test
+	@Test(enabled=false)
 	public void signInUIValidation() {
-		PredefinedActions.start();		
-		HomePage homePage = new HomePage();
+		HomePage homePage =HomePage.getInstance();
 		AuthenticationPage authenticationPage=homePage.clickOnSignIn();		
 		authenticationPage.enterEmailAddress("Vaibhav23823@gmail.com");
 		CreateAccountPage createAccountPage=authenticationPage.createAnAccount();
